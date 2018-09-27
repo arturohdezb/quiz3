@@ -1,0 +1,36 @@
+create tablespace quiz_noche
+datafile '/quiz3/quiz_noche01.dbf' size 10M,
+ '/quiz3/quiz_noche02.dbf' size 10M
+extent MANAGEMENT local AUTOALLOCATE;
+
+select * from dba_tablespaces;
+
+create profile estudiante limit
+sessions_per_user  2
+cpu_per_session unlimited
+connect_time  300;
+
+create user user1
+identified by user1
+default tablespace quiz_noche;
+
+alter user user1
+identified BY user1
+default tablespace quiz_noche
+password expire
+account unlock
+profile estudiante;
+
+grant create user to user1 with admin option;
+
+create user user2
+identified by user2
+default tablespace quiz_noche;
+
+create table attacks (
+	id INT,
+	url VARCHAR(2048),
+	ip_address VARCHAR(20),
+	number_of_attacks INT,
+	time_of_last_attack TIMESTAMP
+);
